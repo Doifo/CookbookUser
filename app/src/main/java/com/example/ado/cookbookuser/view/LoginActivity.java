@@ -20,11 +20,11 @@ import org.litepal.crud.DataSupport;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
-    private String userName;
-    private String userPassword;
-
+    private Toolbar toolbarLogin;
     private EditText editUserName;
     private EditText editUserPassword;
+    private Button btnLogin;
+    private TextView btnRegister;
 
     private LoginPresenter loginPresenter;
 
@@ -32,13 +32,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        loginPresenter = new LoginPresenter(this);
 
-        Toolbar toolbarLogin = findViewById(R.id.toolbar_login);
+        toolbarLogin = findViewById(R.id.toolbar_login);
         editUserName = findViewById(R.id.edit_user_name);
         editUserPassword = findViewById(R.id.edit_user_password);
-        Button btnLogin = findViewById(R.id.btn_login);
-        TextView btnRegister = findViewById(R.id.btn_register_user);
-        loginPresenter = new LoginPresenter(this);
+        btnLogin = findViewById(R.id.btn_login);
+        btnRegister = findViewById(R.id.btn_register_user);
 
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
@@ -57,12 +57,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         editUserName.setText("");
     }
 
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_login:{
-                userName = editUserName.getText().toString();
-                userPassword = editUserPassword.getText().toString();
+                String userName = editUserName.getText().toString();
+                String userPassword = editUserPassword.getText().toString();
 
                 if(!hasWrongInput(userName,userPassword))
                     loginPresenter.userLogin(userName,userPassword);
@@ -99,9 +101,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     }
 
     public void onLoginSucceed(User user){
-//        Intent intent = new Intent(LoginActivity.this, UserActivity.class);
-//        intent.putExtra("name",userName);
-//        startActivity(intent);
 
         DataSupport.deleteAll(UserForNow.class);
         UserForNow userForNow = new UserForNow();

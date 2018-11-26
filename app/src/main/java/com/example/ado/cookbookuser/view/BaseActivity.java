@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.example.ado.cookbookuser.model.User;
 import com.example.ado.cookbookuser.model.UserForNow;
 
+import org.litepal.LitePal;
 import org.litepal.crud.DataSupport;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class BaseActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
 
+        LitePal.getDatabase();
 
     }
 
@@ -28,8 +30,10 @@ public class BaseActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        if(userForNow == null){
-            String userName = DataSupport.findAll(UserForNow.class).get(0).getUserName();
+        List<UserForNow> userForNowTemp = DataSupport.findAll(UserForNow.class);
+
+        if(!userForNowTemp.isEmpty()) {
+            String userName = userForNowTemp.get(0).getUserName();
             List<User> users = DataSupport.findAll(User.class);
             for(User user:users){
                 if (user.getName().equals(userName)) {
@@ -38,6 +42,9 @@ public class BaseActivity extends AppCompatActivity {
                     break;
                 }
             }
+        }else{
+            userForNow = null;
         }
+
     }
 }

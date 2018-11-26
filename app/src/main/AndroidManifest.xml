@@ -30,7 +30,13 @@
             android:name=".view.UserActivity"
             android:label=""
             android:theme="@style/UserTheme" />
-        <activity android:name=".view.LogoutActivity" />
+        <activity
+            android:name=".view.EditUserActivity"
+            android:label="个人资料"
+            android:theme="@style/EditUserTheme"
+            >
+
+        </activity>
     </application>
 
 </manifest>

@@ -15,13 +15,11 @@ import com.example.ado.cookbookuser.presenter.RegisterPresenter;
 
 public class RegisterActivity extends BaseActivity implements View.OnClickListener{
 
-    private String newUserName = null;
-    private String newUserPassword = null;
-    private String newUserPasswordCheck = null;
-
     private EditText editNewUserName;
     private EditText editNewUserPassword;
     private EditText editNewUserPasswordCheck;
+    private Toolbar toolbarRegister;
+    private Button register;
 
     private RegisterPresenter registerPresenter;
 
@@ -29,20 +27,20 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         registerPresenter = new RegisterPresenter(this);
+
         editNewUserName = findViewById(R.id.edit_new_user_name);
         editNewUserPassword = findViewById(R.id.edit_new_user_password);
         editNewUserPasswordCheck =findViewById(R.id.edit_new_user_password_makeSure);
+        toolbarRegister = findViewById(R.id.toolbar_register);
+        register = findViewById(R.id.btn_register);
 
-        Toolbar toolbarRegister = findViewById(R.id.toolbar_register);
         setSupportActionBar(toolbarRegister);
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        Button register = findViewById(R.id.btn_register);
         register.setOnClickListener(this);
     }
 
@@ -58,9 +56,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.btn_register:{
-                newUserName = editNewUserName.getText().toString();
-                newUserPassword = editNewUserPassword.getText().toString();
-                newUserPasswordCheck = editNewUserPasswordCheck.getText().toString();
+                String newUserName = editNewUserName.getText().toString();
+                String newUserPassword = editNewUserPassword.getText().toString();
+                String newUserPasswordCheck = editNewUserPasswordCheck.getText().toString();
 
                 if(!hasWrongInput(newUserName,newUserPassword,newUserPasswordCheck))
                     registerPresenter.userRegister(newUserName,newUserPassword,newUserPasswordCheck);
@@ -93,10 +91,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     public void onRegisterSucceed(String name,String password){
+        //用户默认信息
         User user = new User();
         user.setName(name);
         user.setPassword(password);
         user.setHeadShot("pic_default");
+        user.setGender(0);
+        user.setBirthday("2018-1-1");
         user.save();
         Toast.makeText(RegisterActivity.this,"用户注册成功",Toast.LENGTH_SHORT).show();
         finish();

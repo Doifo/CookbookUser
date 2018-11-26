@@ -9,7 +9,6 @@ public class User extends DataSupport{
     private int gender; //0为未设定，1为男，2为女
     private String headShot;
     private String birthday;
-    private boolean status; //登录状态
 
     public String getName(){
         return name;
@@ -25,8 +24,6 @@ public class User extends DataSupport{
 
     public String getBirthday() { return birthday; }
 
-    public boolean getStatus() { return status; }
-
     public void setName(String name){
         this.name = name;
     }
@@ -41,5 +38,4 @@ public class User extends DataSupport{
 
     public void setBirthday(String birthday) { this.birthday = birthday; }
 
-    public void setStatus(boolean status) { this.status = status; }
 }

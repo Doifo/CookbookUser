@@ -26,9 +26,8 @@
 
     </style>
 
-    <style name="Toolbar.TitleSize" parent="BaseTheme">
-        <item name="android:textSize">30sp</item>
-        <item name="android:color">#fff</item>
+    <style name="EditUserTheme" parent="BaseTheme">
+
     </style>
 
 </resources>
